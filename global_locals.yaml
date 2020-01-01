@@ -1,0 +1,5 @@
+state_bucket: demo.epip.io
+state_bucket_region: us-east-1
+
+repo_name: demo.epip.io
+repo_org: epip-io
