@@ -1,9 +1,15 @@
 terraform {
-  source = "github.com/epip-io/terraform-demo-modules.git//aws/state/remote?ref=tags/v0.1.0"
+  source = "github.com/epip-io/terraform-demo-modules.git//aws/r53?ref=tags/0.1.0"
 }
 
 include {
   path = find_in_parent_folders()
+}
+
+dependencies {
+  paths = [
+    "../state",
+  ]
 }
 
 locals {
@@ -15,5 +21,7 @@ locals {
 }
 
 inputs = {
-  bucket = local.global.state_bucket
+  parent_zone_name = "aws.epip.io"
+
+  attributes = []
 }

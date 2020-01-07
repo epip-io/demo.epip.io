@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com/epip-io/terraform-demo-modules.git//aws/state/local"
+  source = "github.com/epip-io/terraform-demo-modules.git//state/s3?ref=tags/0.1.0"
 }
 
 include {
@@ -15,5 +15,6 @@ locals {
 }
 
 inputs = {
-  bucket = local.global.state_bucket
+  attributes    = ["state"]
+  force_destroy = true
 }

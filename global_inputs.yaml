@@ -1,1 +1,3 @@
-name: demo.epip.io
+namespace: epip
+stage: demo
+name: parity

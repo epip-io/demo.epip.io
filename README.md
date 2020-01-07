@@ -15,11 +15,13 @@ The current architecture uses [AWS](https://aws.amazon.com) as the infrastructur
 
 To manage the [Terragrunt](https://terragrunt.gruntwork.io) code in this repository, it makes uses of a [custom container](https://hub.docker.com/r/stackstate/atlantis-terragrunt) running [Atlantis](https://www.runatlantis.io/) that includes the Terragrunt binary. It adds a webhook to this repo to allow for an Altantis pipepline to occur from this repo.
 
+To elminate the need for, and associated costs, Internet access by the instances, it is expected that containers used by the repo will be stored in an ECR repo in the account that the infrastructure is running in. The expectation is that the docker image path will be the same, just the registry will change to ECR from docker.io, i.e. docker.io/parity/parity vs <account id>.dkr.ecr.<region>.amazonaws.com/parity/parity.
+
 ## Bootstrap
 
 As mentioned in the [objectives](#objectives), bootstrapping is in two parts. This is for the purposes of the demo as the S3 bucket and DynamoDB table that Terragrunt creates are designed for production environments and thus have additional setting unnecessary for a proof of concept or demo.
 
-To bootstrap, both [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) (v0.12.18 at time of writing) and [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) (v0.21.10) needs to be installed
+To bootstrap, both [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) (v0.12.18 at time of writing) and [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/) (v0.21.10) needs to be installed. If necessary, make sure `AWS_PROFILE` is set to the right profile for the account that should be used.
 
 ### Bootstrap State Store
 
