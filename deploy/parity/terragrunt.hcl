@@ -83,24 +83,32 @@ inputs = {
   vpc_id     = dependency.vpc.outputs.vpc_id
   subnet_ids = dependency.vpc.outputs.private_subnet_ids
 
-  ecs_name = dependency.ecs.outputs.ecs_name
-  ecs_arn  = dependency.ecs.outputs.ecs_arn
-  ecs_security_group_ids = [
+  ecs_name        = dependency.ecs.outputs.ecs_name
+  ecs_cluster_arn = dependency.ecs.outputs.ecs_arn
+  security_group_ids = [
     dependency.vpc.outputs.vpc_default_security_group_id
   ]
 
-  container_image  = "parity/parity:v2.5.13-stable"
-  container_port   = 8545
-  container_cpu    = 512
-  container_memory = 256
+  container_image       = "parity/parity:v2.5.13-stable"
+  container_port        = 8545
+  container_cpu         = 512
+  container_memory      = 256
   container_environment = []
-  container_secrets = []
+  container_secrets     = []
+  port_mappings = [
+    {
+      containerPort = 8545
+      hostPort      = 8545
+      protocol      = "tcp"
+    }
+  ]
 
-  alb_security_group                        = dependency.lb.outputs.security_group_id
-  alb_arn_suffix                            = dependency.lb.outputs.alb_arn_suffix
-  alb_ingress_unauthenticated_listener_arns = dependency.lb.outputs.listener_arns
-  alb_ingress_listener_unauthenticated_priority = 102
-  alb_ingress_unauthenticated_hosts         = [
+
+  alb_security_group            = dependency.lb.outputs.security_group_id
+  alb_arn_suffix                = dependency.lb.outputs.alb_arn_suffix
+  unauthenticated_listener_arns = dependency.lb.outputs.listener_arns
+  unauthenticated_priority      = 102
+  unauthenticated_hosts = [
     "parity.${dependency.dns.outputs.zone_name}"
   ]
 

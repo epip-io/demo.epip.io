@@ -37,8 +37,8 @@ dependency "ecs" {
   config_path = "../ecs"
 
   mock_outputs = {
-    ecs_name = "mock-name"
-    ecs_arn  = "arn:mock::ecs:cluster"
+    ecs_name        = "mock-name"
+    ecs_cluster_arn = "arn:mock::ecs:cluster"
   }
 }
 
@@ -85,9 +85,9 @@ inputs = {
   vpc_id     = dependency.vpc.outputs.vpc_id
   subnet_ids = dependency.vpc.outputs.private_subnet_ids
 
-  ecs_name = dependency.ecs.outputs.ecs_name
-  ecs_arn  = dependency.ecs.outputs.ecs_arn
-  ecs_security_group_ids = [
+  ecs_name        = dependency.ecs.outputs.ecs_name
+  ecs_cluster_arn = dependency.ecs.outputs.ecs_arn
+  security_group_ids = [
     dependency.vpc.outputs.vpc_default_security_group_id
   ]
 
@@ -131,11 +131,18 @@ inputs = {
       value = ""
     },
   ]
+  port_mappings = [
+    {
+      containerPort = 4141
+      hostPort      = 4141
+      protocol      = "tcp"
+    }
+  ]
 
-  alb_security_group                        = dependency.lb.outputs.security_group_id
-  alb_arn_suffix                            = dependency.lb.outputs.alb_arn_suffix
-  alb_ingress_unauthenticated_listener_arns = dependency.lb.outputs.listener_arns
-  alb_ingress_unauthenticated_hosts         = [
+  alb_security_group            = dependency.lb.outputs.security_group_id
+  alb_arn_suffix                = dependency.lb.outputs.alb_arn_suffix
+  unauthenticated_listener_arns = dependency.lb.outputs.listener_arns
+  unauthenticated_hosts = [
     "atlantis.${dependency.dns.outputs.zone_name}"
   ]
 
