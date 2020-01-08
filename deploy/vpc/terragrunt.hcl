@@ -1,5 +1,5 @@
 terraform {
-  source = "github.com/epip-io/terraform-demo-modules.git//aws/vpc?ref=tags/0.1.0"
+  source = "git::https://github.com/epip-io/terraform-demo-modules.git//aws/vpc?ref=tags/0.1.0"
 }
 
 include {

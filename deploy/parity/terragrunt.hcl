@@ -1,5 +1,5 @@
 terraform {
-  source = "github.com/epip-io/terraform-demo-modules.git//aws/svc?ref=tags/0.1.0"
+  source = "git::https://github.com/epip-io/terraform-demo-modules.git//aws/svc?ref=tags/0.1.0"
 }
 
 include {
@@ -46,9 +46,9 @@ dependency "lb" {
   config_path = "../lb"
 
   mock_outputs = {
-    alb_security_group = "sg-alb-mock"
+    security_group_id = "sg-alb-mock"
     alb_arn_suffix     = "app/mock/5246daa38a9ce1d2"
-    alb_ingress_unauthenticated_listener_arns = [
+    listener_arns = [
       "arn:aws:elasticloadbalancing:::listener/app/mock/5246daa38a9ce1d2/64d812b25f833b1a",
       "arn:aws:elasticloadbalancing:::listener/app/mock/5246daa38a9ce1d2/bf883549a80dc99d",
     ]
@@ -102,7 +102,12 @@ inputs = {
       protocol      = "tcp"
     }
   ]
-
+  command = [
+    "--base-path",
+    ".",
+    "--chain",
+    "kovan",
+  ]
 
   alb_security_group            = dependency.lb.outputs.security_group_id
   alb_arn_suffix                = dependency.lb.outputs.alb_arn_suffix
@@ -121,6 +126,8 @@ inputs = {
 
   alb_dns_name = dependency.lb.outputs.alb_dns_name
   alb_zone_id  = dependency.lb.outputs.alb_zone_id
+
+  health_check_port = 4141
 
   attributes = []
 }
