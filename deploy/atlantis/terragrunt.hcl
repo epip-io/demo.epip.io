@@ -118,7 +118,7 @@ inputs = {
     },
     {
       name  = "ATLANTIS_REPO_WHITELIST"
-      value = "epip-io/demo.epip.io"
+      value = "github.com/epip-io/demo.epip.io"
     },
   ]
   container_secrets = [
