@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com/epip-io/terraform-demo-modules.git//gh/webhook?ref=tags/0.1.0"
+  source = "git::https://github.com/epip-io/terraform-demo-modules.git//gh/webhook?ref=tags/0.1.1"
 }
 
 include {
@@ -34,7 +34,7 @@ inputs = {
   github_token        = get_env("ATLANTIS_GH_TOKEN", "atlantis-gh-token")
   github_organization = local.global.github_organization
   github_repositories = local.global.github_repositories
-  webhook_url         = "https://atlantis.${dependency.dns.outputs.zone_name}"
+  webhook_url         = "http://atlantis.${dependency.dns.outputs.zone_name}/events"
 
   events = [
     "issue_comment",
