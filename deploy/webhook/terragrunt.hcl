@@ -44,5 +44,7 @@ inputs = {
     "push",
   ]
 
+  active = true
+
   attributes = []
 }

@@ -19,23 +19,16 @@ locals {
 
 # Configure Terragrunt to automatically store tfstate files in an S3 bucket
 remote_state {
-  backend = "local"
+  backend = "s3"
 
   config = {
-    path = "${get_terragrunt_dir()}/${path_relative_from_include()}/../deploy/${path_relative_to_include()}/terraform.tfstate"
+    region         = "us-east-1"
+    bucket         = "epip-demo-parity-state"
+    key            = "${path_relative_to_include()}/terraform.tfstate"
+    dynamodb_table = "epip-demo-parity-state-lock"
+    encrypt        = true
   }
 }
-// remote_state {
-//   backend = "s3"
-
-//   config = {
-//     region         = "us-east-1"
-//     bucket         = "epip-demo-parity-state"
-//     key            = "${path_relative_to_include()}/terraform.tfstate"
-//     dynamodb_table = "epip-demo-parity-state-lock"
-//     encrypt        = true
-//   }
-// }
 
 # Configure root level variables that all resources can inherit. This is especially helpful with multi-account configs
 # where terraform_remote_state data sources are placed directly into the modules.

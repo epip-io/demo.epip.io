@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com/epip-io/terraform-demo-modules.git//aws/svc?ref=tags/0.1.0"
+  source = "git::https://github.com/epip-io/terraform-demo-modules.git//aws/svc?ref=tags/0.1.1"
 }
 
 include {
@@ -103,6 +103,7 @@ inputs = {
     }
   ]
   command = [
+    "--unsafe-expose",
     "--base-path",
     ".",
     "--chain",

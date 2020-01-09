@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com/epip-io/terraform-demo-modules.git//aws/alb?reg=tags/0.1.0"
+  source = "git::https://github.com/epip-io/terraform-demo-modules.git//aws/alb?ref=tags/0.1.1"
 }
 
 include {
@@ -7,8 +7,8 @@ include {
 }
 
 dependencies {
+  // "../cert",
   paths = [
-    "../cert",
     "../vpc",
   ]
 }
@@ -21,13 +21,13 @@ locals {
   )
 }
 
-dependency "cert" {
-  config_path = "../cert"
+// dependency "cert" {
+//   config_path = "../cert"
 
-  mock_outputs = {
-    arn = "arn:mock::cert/mock"
-  }
-}
+//   mock_outputs = {
+//     arn = "arn:mock::cert/mock"
+//   }
+// }
 
 dependency "vpc" {
   config_path = "../vpc"
@@ -49,10 +49,10 @@ inputs = {
   ip_address_type   = "ipv4"
   access_log_region = dependency.vpc.outputs.vpc_region
 
-  https_enabled             = true
+  https_enabled             = false
   http_ingress_cidr_blocks  = ["0.0.0.0/0"]
   https_ingress_cidr_blocks = ["0.0.0.0/0"]
-  certificate_arn           = dependency.cert.outputs.arn
+  // certificate_arn           = dependency.cert.outputs.arn
 
   attributes = []
 }

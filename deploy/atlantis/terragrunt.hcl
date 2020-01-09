@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com/epip-io/terraform-demo-modules.git//aws/svc?ref=tags/0.1.0"
+  source = "git::https://github.com/epip-io/terraform-demo-modules.git//aws/svc?ref=tags/0.1.1"
 }
 
 include {
@@ -37,8 +37,8 @@ dependency "ecs" {
   config_path = "../ecs"
 
   mock_outputs = {
-    ecs_name        = "mock-name"
-    ecs_cluster_arn = "arn:mock::ecs:cluster"
+    ecs_name = "mock-name"
+    ecs_arn  = "arn:mock::ecs:cluster"
   }
 }
 
@@ -47,7 +47,7 @@ dependency "lb" {
 
   mock_outputs = {
     security_group_id = "sg-alb-mock"
-    alb_arn_suffix     = "app/mock/5246daa38a9ce1d2"
+    alb_arn_suffix    = "app/mock/5246daa38a9ce1d2"
     listener_arns = [
       "arn:aws:elasticloadbalancing:::listener/app/mock/5246daa38a9ce1d2/64d812b25f833b1a",
       "arn:aws:elasticloadbalancing:::listener/app/mock/5246daa38a9ce1d2/bf883549a80dc99d",
@@ -86,7 +86,7 @@ inputs = {
   subnet_ids = dependency.vpc.outputs.private_subnet_ids
 
   ecs_name        = dependency.ecs.outputs.ecs_name
-  ecs_cluster_arn = dependency.ecs.outputs.ecs_cluster_arn
+  ecs_cluster_arn = dependency.ecs.outputs.ecs_arn
   security_group_ids = [
     dependency.vpc.outputs.vpc_default_security_group_id
   ]
@@ -110,7 +110,7 @@ inputs = {
     },
     {
       name  = "ATLANTIS_ATLANTIS_URL"
-      value = "https://atlantis.${dependency.dns.outputs.zone_name}"
+      value = "http://atlantis.${dependency.dns.outputs.zone_name}"
     },
     {
       name  = "ATLANTIS_GH_USER"
@@ -118,7 +118,7 @@ inputs = {
     },
     {
       name  = "ATLANTIS_REPO_WHITELIST"
-      value = "github.com/epip-ip/demo.epip.io*"
+      value = "github.com/epip-io/demo.epip.io*"
     },
   ]
   container_secrets = [
@@ -155,6 +155,10 @@ inputs = {
 
   alb_dns_name = dependency.lb.outputs.alb_dns_name
   alb_zone_id  = dependency.lb.outputs.alb_zone_id
+
+  task_role_policy_arns = [
+    "arn:aws:iam::aws:policy/AdministratorAccess"
+  ]
 
   attributes = []
 }
