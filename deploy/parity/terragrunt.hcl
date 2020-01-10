@@ -103,7 +103,7 @@ inputs = {
     }
   ]
   command = [
-    "--jsonrpc-interface=all"
+    "--jsonrpc-interface=all",
     "--jsonrpc-apis=safe",
     "--base-path",
     ".",
