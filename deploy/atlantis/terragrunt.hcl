@@ -91,10 +91,10 @@ inputs = {
     dependency.vpc.outputs.vpc_default_security_group_id
   ]
 
-  container_image  = "stackstate/atlantis-terragrunt:latest"
+  container_image  = "epip/docker-atlantis-terragrunt:v0.1.0"
   container_port   = 4141
-  container_cpu    = 256
-  container_memory = 256
+  container_cpu    = 512
+  container_memory = 512
   container_environment = [
     {
       name  = "ATLANTIS_REPO_CONFIG_JSON"
