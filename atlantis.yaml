@@ -5,10 +5,12 @@ projects:
   workflow: terragrunt
   autoplan:
     when_modified: ["*.hcl"]
+  apply_requirements: ["mergeable"]
 - dir: deploy/parity
   workflow: terragrunt
   autoplan:
     when_modified: ["*.hcl"]
+  apply_requirements: ["mergeable"]
 workflows:
   terragrunt:
     plan:
